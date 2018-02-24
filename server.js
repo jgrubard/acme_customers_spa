@@ -4,7 +4,11 @@ const path = require('path');
 
 const { sync, seed, Customer } = require('./db/index.js');
 
+
+
 app.use(express.static(path.join(__dirname, './client')))
+
+app.use(require('body-parser').json());
 
 app.get('/', (req, res, next) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
@@ -19,10 +23,11 @@ app.get('/api/customers', (req, res, next) => {
 });
 
 app.post('/api/customers', (req, res, next) => {
-  console.log(req.body)
+  // console.log(req.body)
   Customer.create(req.body)
-    .then( () => {
-      res.redirect('/');
+    .then( (customer) => {
+      console.log(customer);
+      res.json(customer);
     })
     .catch(next);
 });
