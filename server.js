@@ -23,10 +23,11 @@ app.get('/api/customers', (req, res, next) => {
 });
 
 app.post('/api/customers', (req, res, next) => {
+  // console.log('test')
   // console.log(req.body)
   Customer.create(req.body)
     .then( (customer) => {
-      console.log(customer);
+      // console.log(customer);
       res.json(customer);
     })
     .catch(next);
