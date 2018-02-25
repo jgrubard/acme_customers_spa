@@ -23,15 +23,22 @@ app.get('/api/customers', (req, res, next) => {
 });
 
 app.post('/api/customers', (req, res, next) => {
-  // console.log('test')
-  // console.log(req.body)
   Customer.create(req.body)
     .then( (customer) => {
-      // console.log(customer);
       res.json(customer);
     })
     .catch(next);
 });
+
+app.delete('api/customers/:id', (req, res, next) => {
+  Customer.findyById(req.params.id)
+    .then((customer) => {
+      customer.destroy()
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+})
 
 const port = process.env.PORT || 3000;
 
