@@ -4,8 +4,6 @@ const path = require('path');
 
 const { sync, seed, Customer } = require('./db/index.js');
 
-
-
 app.use(express.static(path.join(__dirname, './client')))
 
 app.use(require('body-parser').json());
@@ -50,5 +48,3 @@ sync()
   .then(() => {
     seed();
   });
-
-module.exports = app;

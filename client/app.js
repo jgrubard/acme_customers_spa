@@ -1,57 +1,58 @@
-var customers;
-
+const createCustomer = document.getElementById('createButton');
+const ul = document.getElementById('customerList');
 
 fetch('/api/customers')
-  .then( (data) => {
-    return data.json();
+  .then( (result) => {
+    return result.json();
   })
-  .then( (_customers) => {
-    // console.log(_customers)
-    customers = _customers;
-    addCustomers(customers);
-
-
+  .then( (data) => {
+    data.forEach((cust) => {
+      addCustomers(cust);
+    })
   })
   .catch( (err) => {
     console.error(err);
   });
 
-console.log(customers)
+function addCustomers(customer) {
+  let li = document.createElement('li');
+  let removeButton = document.createElement('button');
+  li.append(customer.email);
+  removeButton.append('Remove');
+  li.append(removeButton);
+  ul.append(li);
 
-function addCustomers(cust) {
-  cust.forEach((person) => {
-    let li = document.createElement('li');
-    let remButton = document.createElement('button');
-    li.append(person.email);
-    remButton.append('Remove');
-    remButton.className = 'rem-button'
-    li.append(remButton);
-    document.getElementById('customerList').append(li);
+  // removeButton.onClick = () => {
+  //   console.log('delete button pressed')
+  //   deleteCustomer(customer, li);
+  // }
+
+  removeButton.addEventListener('click', () => {
+    deleteCustomer(customer, li);
   })
-
 }
 
-document.getElementById('createButton').addEventListener('click', () => {
+createCustomer.addEventListener('click', () => {
   fetch('/api/customers', {
     method: 'POST',
     body: JSON.stringify({
       email: document.getElementById('email').value
     }),
-    headers: new Headers({
+    headers: {
       'Content-Type': 'application/json'
-    })
+    }
   })
-  // .then((data) => {
-  //   return data.json();
-  // })
   .catch((err) => {
     console.error(err);
   })
 })
 
-// document.getElementById('rem-button').addEventListener('click', () => {
-//   fetch('/api/customers/')
-// })
-
-
-
+function deleteCustomer(customer, listItem) {
+  listItem.remove();
+  return fetch(`/api/customers/${customer.id}`, {
+    method: 'DELETE'
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+}
