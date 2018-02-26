@@ -7,8 +7,7 @@ const Customer = _conn.define('customer', {
     unique: true,
     validate: {
       isEmail: true,
-      // notNull: true,
-      // notEmpty: true
+      notEmpty: true
     }
   }
 }, {

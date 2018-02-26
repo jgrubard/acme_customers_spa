@@ -8,9 +8,7 @@ app.use(express.static(path.join(__dirname, './client')))
 
 app.use(require('body-parser').json());
 
-// app.use((err, req, res, next) => {
-
-// })
+app.use('/vendors', express.static(path.join(__dirname, 'node_modules')));
 
 app.get('/api/customers', (req, res, next) => {
   Customer.findAll()
