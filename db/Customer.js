@@ -3,11 +3,11 @@ const { _conn, Sequelize } = require('./conn.js');
 const Customer = _conn.define('customer', {
   email: {
     type: Sequelize.STRING,
-    // unique: true,
+    unique: true,
     validate: {
       isEmail: true,
       // notNull: true,
-      // notEmpty: true
+      notEmpty: true
     }
   }
 }, {

@@ -21,12 +21,6 @@ function addCustomers(customer) {
   removeButton.append('Remove');
   li.append(removeButton);
   ul.append(li);
-
-  // removeButton.onClick = () => {
-  //   console.log('delete button pressed')
-  //   deleteCustomer(customer, li);
-  // }
-
   removeButton.addEventListener('click', () => {
     deleteCustomer(customer, li);
   })
@@ -49,8 +43,8 @@ createCustomer.addEventListener('click', () => {
 
 function deleteCustomer(customer, listItem) {
   listItem.remove();
-  return fetch(`/api/customers/${customer.id}`, {
-    method: 'DELETE'
+  fetch(`/api/customers/${customer.id}`, {
+    method: 'delete'
   })
   .catch((err) => {
     console.error(err);
