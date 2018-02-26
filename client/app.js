@@ -7,24 +7,12 @@ fetch('/api/customers')
   })
   .then( (data) => {
     data.forEach((cust) => {
-      addCustomers(cust);
+      addCustomer(cust);
     })
   })
   .catch( (err) => {
     console.error(err);
   });
-
-function addCustomers(customer) {
-  let li = document.createElement('li');
-  let removeButton = document.createElement('button');
-  li.append(customer.email);
-  removeButton.append('Remove');
-  li.append(removeButton);
-  ul.append(li);
-  removeButton.addEventListener('click', () => {
-    deleteCustomer(customer, li);
-  })
-}
 
 createCustomer.addEventListener('click', () => {
   fetch('/api/customers', {
@@ -41,10 +29,22 @@ createCustomer.addEventListener('click', () => {
   })
 })
 
+function addCustomer(customer) {
+  let li = document.createElement('li');
+  let removeButton = document.createElement('button');
+  li.append(customer.email);
+  removeButton.append('Remove');
+  li.append(removeButton);
+  ul.append(li);
+  removeButton.addEventListener('click', () => {
+    deleteCustomer(customer, li);
+  })
+}
+
 function deleteCustomer(customer, listItem) {
   listItem.remove();
   fetch(`/api/customers/${customer.id}`, {
-    method: 'delete'
+    method: 'DELETE'
   })
   .catch((err) => {
     console.error(err);

@@ -8,6 +8,10 @@ app.use(express.static(path.join(__dirname, './client')))
 
 app.use(require('body-parser').json());
 
+// app.use((err, req, res, next) => {
+
+// })
+
 app.get('/api/customers', (req, res, next) => {
   Customer.findAll()
     .then( (customers) => {
@@ -25,13 +29,13 @@ app.post('/api/customers', (req, res, next) => {
 });
 
 app.delete('/api/customers/:id', (req, res, next) => {
-    Customer.findById(req.params.id)
-      .then((customer) => {
-        customer.destroy()
-      })
-      .catch((err) => {
-        console.error(err);
-      })
+  Customer.findById(req.params.id)
+    .then((customer) => {
+      customer.destroy()
+    })
+    .catch((err) => {
+      console.error(err);
+    })
 })
 
 const port = process.env.PORT || 3000;
