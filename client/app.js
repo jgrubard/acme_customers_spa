@@ -11,6 +11,8 @@ let emailInput = document.getElementById('email');
 emailInput.className = 'form-control';
 emailInput.placeholder = 'Enter a valid email address'
 
+// message.append('test');
+
 fetch('/api/customers')
   .then( (result) => {
     return result.json();
@@ -21,10 +23,11 @@ fetch('/api/customers')
     })
   })
   .catch( (err) => {
-    message.innerText(err);
+    message.append(err);
   });
 
-createCustomer.addEventListener('click', () => {
+createCustomer.addEventListener('click', (event) => {
+  event.preventDefault();
   fetch('/api/customers', {
     method: 'POST',
     body: JSON.stringify({
@@ -34,15 +37,9 @@ createCustomer.addEventListener('click', () => {
       'Content-Type': 'application/json'
     }
   })
-  // .then(handleErrors)
-  // .then((response) => {
-  //   console.log('ok')
-  // })
   .catch((err) => {
-    // message.innerText(err);
-    message.innerText('Text');
-    console.log(message + err);
-    // console.error(err);
+    console.log(err);
+    message.append(err);
   })
 })
 
@@ -67,7 +64,7 @@ function deleteCustomer(customer, listItem) {
     method: 'DELETE'
   })
   .catch((err) => {
-    message.innerText(err);
+    message.append(err);
   })
 }
 
