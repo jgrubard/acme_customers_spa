@@ -11,8 +11,6 @@ let emailInput = document.getElementById('email');
 emailInput.className = 'form-control';
 emailInput.placeholder = 'Enter a valid email address'
 
-// message.append('test');
-
 fetch('/api/customers')
   .then( (result) => {
     return result.json();
@@ -37,9 +35,9 @@ createCustomer.addEventListener('click', (event) => {
       'Content-Type': 'application/json'
     }
   })
+  .then(handleErrors)
   .catch((err) => {
-    console.log(err);
-    message.append(err);
+    message.innerHTML = err;
   })
 })
 
@@ -64,7 +62,7 @@ function deleteCustomer(customer, listItem) {
     method: 'DELETE'
   })
   .catch((err) => {
-    message.append(err);
+    message.innerHTML(err);
   })
 }
 

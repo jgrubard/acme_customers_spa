@@ -10,12 +10,6 @@ app.use(require('body-parser').json());
 
 app.use('/vendors', express.static(path.join(__dirname, 'node_modules')));
 
-app.use(function(err, req, res, next) {
-  console.error(err, err.stack);
-  res.status(err.status || 500);
-  res.send("Something went wrong: " + err.message);
-});
-
 app.get('/api/customers', (req, res, next) => {
   Customer.findAll()
     .then( (customers) => {
